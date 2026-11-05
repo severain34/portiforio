@@ -1,104 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#07090c">
-  <title>Severain — Developer Portfolio</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23099b72' d='M48 8C25 8 8 23 8 43s16 35 38 35h8L40 96l28-20c15-6 24-18 24-33C92 23 74 8 48 8Z'/%3E%3Cpath fill='%23ff624f' d='M54 15h8c19 0 32 12 32 29S81 73 62 73H43l17-14H45c-16 0-27-9-27-22S30 15 48 15Z'/%3E%3Cpath fill='none' stroke='white' stroke-width='7' stroke-linecap='round' d='M37 18c-12 5-18 14-18 24 0 15 12 24 29 24h15c16 0 26-8 26-21 0-7-3-13-8-17'/%3E%3Ccircle cx='36' cy='39' r='6' fill='%231a2931'/%3E%3Ccircle cx='68' cy='57' r='6' fill='%231a2931'/%3E%3C/svg%3E">
-  <style>
-    * { box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; margin: 0; background: #07090c; }
-    iframe { display: block; width: 100%; height: 100%; border: 0; }
-  </style>
-</head>
-<body>
-  <iframe id="portfolio" src="portiforio.html" title="Severain's developer portfolio"></iframe>
-  <script>
-    (function () {
-      'use strict';
-
-      var frame = document.getElementById('portfolio');
-      var logoSvg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Severain logo"><path fill="#099b72" d="M48 8C25 8 8 23 8 43s16 35 38 35h8L40 96l28-20c15-6 24-18 24-33C92 23 74 8 48 8Z"/><path fill="#ff624f" d="M54 15h8c19 0 32 12 32 29S81 73 62 73H43l17-14H45c-16 0-27-9-27-22S30 15 48 15Z"/><path fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" d="M37 18c-12 5-18 14-18 24 0 15 12 24 29 24h15c16 0 26-8 26-21 0-7-3-13-8-17"/><circle cx="36" cy="39" r="6" fill="#1a2931"/><circle cx="68" cy="57" r="6" fill="#1a2931"/></svg>';
-      var reactCode = [
-        'import { useState } from \'react\';',
-        '',
-        'function Portfolio() {',
-        '  const [ideas, setIdeas] = useState(22);',
-        '',
-        '  return (',
-        '    <main className="portfolio">',
-        '      <h1>Building ideas into reality</h1>',
-        '      <p>{ideas}+ projects, made with care.</p>',
-        '    </main>',
-        '  );',
-        '}',
-        '',
-        'export default Portfolio;'
-      ].join('\n');
-
-      frame.addEventListener('load', function () {
-        try {
-          var doc = frame.contentDocument;
-          if (!doc) return;
-
-          // Put the supplied green-and-coral logo in the portfolio's home navigation.
-          var brandLogo = doc.querySelector('.nav-brand-logo');
-          if (brandLogo) {
-            brandLogo.innerHTML = logoSvg;
-            brandLogo.setAttribute('aria-label', 'Severain logo');
-            brandLogo.setAttribute('role', 'img');
-          }
-
-          var style = doc.createElement('style');
-          style.textContent = [
-            '.nav-brand-logo { width: 56px !important; height: 56px !important; padding: 0 !important; background: transparent !important; box-shadow: none !important; overflow: visible !important; }',
-            '.nav-brand-logo svg { display: block; width: 100%; height: 100%; filter: drop-shadow(0 0 10px rgba(100,255,218,.25)); }',
-            '.hero-card .code-block.react-typing { min-height: 17rem; white-space: pre; overflow-x: auto; }',
-            '.hero-card .code-block.react-typing .typing-output { color: #b0c4d8; }',
-            '.hero-card .code-block.react-typing .typing-cursor { vertical-align: -2px; }'
-          ].join('\n');
-          doc.head.appendChild(style);
-
-          var codeBlock = doc.querySelector('.hero-card .code-block');
-          if (!codeBlock) return;
-          codeBlock.classList.add('react-typing');
-          codeBlock.setAttribute('aria-label', 'Animated React code sample');
-          codeBlock.setAttribute('aria-live', 'off');
-          codeBlock.replaceChildren();
-
-          var output = doc.createElement('span');
-          output.className = 'typing-output';
-          var cursor = doc.createElement('span');
-          cursor.className = 'typing-cursor';
-          cursor.setAttribute('aria-hidden', 'true');
-          codeBlock.append(output, cursor);
-
-          if (doc.defaultView.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-            output.textContent = reactCode;
-            cursor.hidden = true;
-            return;
-          }
-
-          var position = 0;
-          function typeNextCharacter() {
-            if (position >= reactCode.length) {
-              doc.defaultView.setTimeout(function () {
-                position = 0;
-                output.textContent = '';
-                typeNextCharacter();
-              }, 2200);
-              return;
-            }
-            output.textContent += reactCode.charAt(position++);
-            doc.defaultView.setTimeout(typeNextCharacter, reactCode.charAt(position - 1) === '\n' ? 170 : 28);
-          }
-          doc.defaultView.setTimeout(typeNextCharacter, 450);
-        } catch (error) {
-          // If the portfolio is hosted on another origin, leave its original content untouched.
-        }
-      });
-    }());
-  </script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#07090c" />
+    <meta name="description" content="Severain — full-stack developer portfolio." />
+    <title>Severain — Developer Portfolio</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%23099b72' d='M48 8C25 8 8 23 8 43s16 35 38 35h8L40 96l28-20c15-6 24-18 24-33C92 23 74 8 48 8Z'/%3E%3Cpath fill='%23ff624f' d='M54 15h8c19 0 32 12 32 29S81 73 62 73H43l17-14H45c-16 0-27-9-27-22S30 15 48 15Z'/%3E%3Cpath fill='none' stroke='white' stroke-width='7' stroke-linecap='round' d='M37 18c-12 5-18 14-18 24 0 15 12 24 29 24h15c16 0 26-8 26-21 0-7-3-13-8-17'/%3E%3Ccircle cx='36' cy='39' r='6' fill='%231a2931'/%3E%3Ccircle cx='68' cy='57' r='6' fill='%231a2931'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
