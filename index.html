@@ -1,1 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#07090c">
+  <title>Severain — Developer Portfolio</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body { width: 100%; height: 100%; margin: 0; background: #07090c; }
+    iframe { display: block; width: 100%; height: 100%; border: 0; }
+  </style>
+</head>
+<body>
+  <iframe id="portfolio" src="portiforio.html" title="Severain's developer portfolio"></iframe>
+  <script>
+    (function () {
+      'use strict';
 
+      var frame = document.getElementById('portfolio');
+      var reactCode = [
+        'import { useState } from \'react\';',
+        '',
+        'function Portfolio() {',
+        '  const [ideas, setIdeas] = useState(22);',
+        '',
+        '  return (',
+        '    <main className="portfolio">',
+        '      <h1>Building ideas into reality</h1>',
+        '      <p>{ideas}+ projects, made with care.</p>',
+        '    </main>',
+        '  );',
+        '}',
+        '',
+        'export default Portfolio;'
+      ].join('\n');
+
+      frame.addEventListener('load', function () {
+        try {
+          var doc = frame.contentDocument;
+          var codeBlock = doc && doc.querySelector('.hero-card .code-block');
+          if (!codeBlock) return;
+
+          var style = doc.createElement('style');
+          style.textContent = [
+            '.hero-card .code-block.react-typing { min-height: 17rem; white-space: pre; overflow-x: auto; }',
+            '.hero-card .code-block.react-typing .typing-output { color: #b0c4d8; }',
+            '.hero-card .code-block.react-typing .typing-cursor { vertical-align: -2px; }'
+          ].join('\n');
+          doc.head.appendChild(style);
+
+          codeBlock.classList.add('react-typing');
+          codeBlock.setAttribute('aria-label', 'Animated React code sample');
+          codeBlock.setAttribute('aria-live', 'off');
+          codeBlock.replaceChildren();
+
+          var output = doc.createElement('span');
+          output.className = 'typing-output';
+          var cursor = doc.createElement('span');
+          cursor.className = 'typing-cursor';
+          cursor.setAttribute('aria-hidden', 'true');
+          codeBlock.append(output, cursor);
+
+          if (doc.defaultView.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            output.textContent = reactCode;
+            cursor.hidden = true;
+            return;
+          }
+
+          var position = 0;
+          function typeNextCharacter() {
+            if (position >= reactCode.length) {
+              doc.defaultView.setTimeout(function () {
+                position = 0;
+                output.textContent = '';
+                typeNextCharacter();
+              }, 2200);
+              return;
+            }
+            output.textContent += reactCode.charAt(position++);
+            doc.defaultView.setTimeout(typeNextCharacter, reactCode.charAt(position - 1) === '\n' ? 170 : 28);
+          }
+          doc.defaultView.setTimeout(typeNextCharacter, 450);
+        } catch (error) {
+          // If the portfolio is hosted on another origin, leave its original code card untouched.
+        }
+      });
+    }());
+  </script>
+</body>
+</html>
